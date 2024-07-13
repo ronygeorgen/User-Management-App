@@ -4,7 +4,7 @@ from django.utils import timezone
 # Create your models here.
 
 class MyAccountManager(BaseUserManager):
-    def create_user(self, first_name, last_name, username, email, password = None):
+    def create_user(self, first_name, last_name, username, email, phone_number, password = None):
         if not email:
             raise ValueError('User must have an email address')
         if not username:
@@ -15,6 +15,7 @@ class MyAccountManager(BaseUserManager):
             username = username,
             first_name = first_name,
             last_name = last_name,
+            phone_number=phone_number,
         )
         user.set_password(password)
         user.save(using=self._db)
@@ -40,7 +41,7 @@ class CustomUser(AbstractBaseUser):
     last_name       = models.CharField(max_length=50)
     username        = models.CharField(max_length=50, unique=True)
     email           = models.EmailField(max_length=100, unique=True)
-    phone_number    = models.CharField(max_length=50)
+    phone_number    = models.CharField(max_length=50, blank=True)
 
     #required
     date_joined     = models.DateTimeField(auto_now_add=True)
