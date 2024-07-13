@@ -38,6 +38,7 @@ staticfiles/
 
 # Django settings
 env/
+.env/
 
 # Vite build output
 dist/
