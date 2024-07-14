@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../axiosconfig";
 import { setAuthData } from "../../redux/auth/authSlice";
-
+import adminAxiosInstance from "../../adminaxiosconfig";
 const AdminLogin = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -13,7 +13,8 @@ const AdminLogin = () => {
     const handleAdminLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axiosInstance.post('/admin/token/', {email, password});
+            const response = await adminAxiosInstance.post('/admin/token/', {email, password});
+            localStorage.setItem('adminToken', response.data.admin_token);
             dispatch(setAuthData(response.data));
             navigate('/admin/dashboard');
         } catch (error) {
