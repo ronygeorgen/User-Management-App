@@ -14,6 +14,8 @@ const Login = ()=> {
         e.preventDefault();
         try {
             const response = await axiosInstance.post('/login/',{email, password});
+            const { user, token } = response.data;
+            localStorage.setItem('token', token);
             dispatch(setAuthData(response.data));
             navigate('/home')
         } catch (error){

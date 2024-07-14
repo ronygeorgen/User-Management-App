@@ -4,6 +4,7 @@ import Signup from "./components/signup/Signup"
 import Home from "./components/home/Home"
 import AdminLogin from "./components/admin/AdminLogin"
 import AdminDashboard from "./components/admin/AdminDashboard"
+import UserProfile from "./components/home/UserProfile"
 function App() {
 
   return (
@@ -12,7 +13,8 @@ function App() {
     <nav>
       <Link to="/login">Login</Link><br />
       <Link to="/signup">Signup</Link><br />
-      <Link to="/admin/login">Admin Login</Link>
+      <Link to="/admin/login">Admin Login</Link><br />
+      <Link to="/user-profile">User Profile</Link>
     </nav>
     <Routes>
       <Route path="/" element={<Login />} />
@@ -21,6 +23,7 @@ function App() {
       <Route path="/home" element={<Home />} />
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
+      <Route path="/user-profile" element={<UserProfile />} />
   </Routes>
     </BrowserRouter>
     </>
