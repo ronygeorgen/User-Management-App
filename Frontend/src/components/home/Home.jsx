@@ -2,6 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { clearAuthData } from '../../redux/auth/authSlice'
+import './Home.css'
 function Home() {
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
@@ -14,11 +15,11 @@ function Home() {
   }
 
   return (
-    <div>
+    <div >
       <h1>Welcome {user ? user.first_name : 'Guest'}! </h1>
       <button onClick={handleLogout}>Logout</button>
     </div>
   )
 }
 
-export default Home
+export default Home;
