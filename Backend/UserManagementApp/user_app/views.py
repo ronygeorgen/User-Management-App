@@ -21,6 +21,7 @@ class SignupView(APIView):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
+            UserProfile.objects.create(user=user)
             refresh = RefreshToken.for_user(user)
             return Response({
                 'user': UserSerializer(user).data,

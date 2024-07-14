@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { clearAuthData } from '../../redux/auth/authSlice'
 import axiosInstance from '../../axiosconfig'
-
+import './UserProfile.css'
 function UserProfile() {
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
@@ -74,60 +74,55 @@ function UserProfile() {
     return <div>Loading...</div>;
   }
 
-return (
-    <div>
-      <h1>User Profile</h1>
-      <h2>Welcome {user?.first_name} {user?.last_name}</h2>
-      <div style={{ marginBottom: '20px' }}>
-        {profile.profile_picture ? (
-          <img 
-            src={profile.profile_picture} 
-            alt="Profile" 
-            style={{ 
-              width: '150px', 
-              height: '150px', 
-              borderRadius: '50%', 
-              objectFit: 'cover' 
-            }} 
-          />
-        ) : (
-          <div 
-            style={{ 
-              width: '150px', 
-              height: '150px', 
-              borderRadius: '50%', 
-              backgroundColor: '#ccc',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              fontSize: '48px',
-              color: '#fff'
-            }}
-          >
-            {user?.first_name[0]}
+  return (
+    <div className="user-profile">
+      <h1 className="profile-title">User Profile</h1>
+      <div className="profile-card">
+        <div className="profile-header">
+          <div className="profile-picture">
+            {profile.profile_picture ? (
+              <img src={profile.profile_picture} alt="Profile" />
+            ) : (
+              <div className="profile-initial">{user?.first_name[0]}</div>
+            )}
           </div>
-        )}
+          <h2 className="profile-name">
+            Welcome {user?.first_name} {user?.last_name}
+          </h2>
+        </div>
+        <div className="profile-body">
+          {isEditing ? (
+            <div className="edit-form">
+              <input
+                type="text"
+                value={newUsername}
+                onChange={(e) => setNewUsername(e.target.value)}
+                placeholder="New username"
+              />
+              <input
+                type="file"
+                onChange={(e) => setNewProfilePicture(e.target.files[0])}
+                className="file-input"
+              />
+              <button onClick={handleSave} className="save-btn">
+                Save
+              </button>
+            </div>
+          ) : (
+            <div className="profile-info">
+              <p>Username: {profile.username}</p>
+              <div className="profile-actions">
+                <button onClick={handleEdit} className="edit-btn">
+                  Edit Profile
+                </button>
+                <button onClick={handleLogout} className="logout-btn">
+                  Logout
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-      {isEditing ? (
-        <div>
-          <input
-            type="text"
-            value={newUsername}
-            onChange={(e) => setNewUsername(e.target.value)}
-          />
-          <input
-            type="file"
-            onChange={(e) => setNewProfilePicture(e.target.files[0])}
-          />
-          <button onClick={handleSave}>Save</button>
-        </div>
-      ) : (
-        <div>
-          <p>Username: {profile.username}</p>
-          <button onClick={handleEdit}>Edit</button>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
-      )}
     </div>
   );
 }

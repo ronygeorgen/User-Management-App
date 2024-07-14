@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearAuthData } from '../../redux/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import adminAxiosInstance from '../../adminaxiosconfig';
-
+import './AdminDashboard.css';
 const AdminDashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -45,10 +45,10 @@ const AdminDashboard = () => {
     }
   };
 
-  const UserTable = ({ users, tableTitle }) => (
-    <>
-      <h3>{tableTitle}</h3>
-      <table>
+  const UserTable = ({ users, tableTitle, isActive }) => (
+    <div className="user-table-container">
+      <h3 className="table-title">{tableTitle}</h3>
+      <table className="user-table">
         <thead>
           <tr>
             <th>ID</th>
@@ -64,26 +64,40 @@ const AdminDashboard = () => {
               <td>{user.username}</td>
               <td>{user.email}</td>
               <td>
-                <button onClick={() => toggleUserStatus(user.id, user.is_active)}>
-                  {user.is_active ? 'Block' : 'Unblock'}
+                <button 
+                  className={`action-btn ${isActive ? 'block-btn' : 'unblock-btn'}`}
+                  onClick={() => toggleUserStatus(user.id, user.is_active)}
+                >
+                  {isActive ? 'Block' : 'Unblock'}
                 </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-    </>
+    </div>
   );
 
   return (
-    <div>
-      <h1>Admin Dashboard</h1>
-      <h5>{message}</h5>
-      <h5>Welcome {user ? user.first_name : 'Admin'}! </h5>
-      <button onClick={handleLogout}>Logout</button>
+    <div className="admin-dashboard">
+      <header className="dashboard-header">
+        <h1 className="dashboard-title">Admin Dashboard</h1>
+        <div className="user-info">
+          <h5 className="welcome-message">Welcome {user ? user.first_name : 'Admin'}!</h5>
+          <button className="logout-btn" onClick={handleLogout}>Logout</button>
+        </div>
+      </header>
+      
+      <main className="dashboard-content">
+        <div className="message-container">
+          <h5 className="dashboard-message">{message}</h5>
+        </div>
 
-      <UserTable users={activeUsers} tableTitle="Active Users" />
-      <UserTable users={inactiveUsers} tableTitle="Inactive Users" />
+        <div className="users-section">
+          <UserTable users={activeUsers} tableTitle="Active Users" isActive={true}/>
+          <UserTable users={inactiveUsers} tableTitle="Inactive Users" isActive={false}/>
+        </div>
+      </main>
     </div>
   );
 };
