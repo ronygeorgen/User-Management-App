@@ -1,3 +1,4 @@
+import profile
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.utils import timezone
@@ -64,3 +65,10 @@ class CustomUser(AbstractBaseUser):
     
     def has_module_perms(self,app_label):
         return True
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    profile_picture = models.ImageField(upload_to='user/profile_pic/', null=True, blank=True)
+
+    def __str__(self):
+        return str(self.user.first_name)

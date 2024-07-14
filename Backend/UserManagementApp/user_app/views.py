@@ -4,12 +4,13 @@ from rest_framework.views import APIView
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import UserSerializer
-
+from .models import UserProfile
 # admin modules import below
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import IsAdminUser
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
+from .serializers import UserProfileSerializer
 
 User = get_user_model()
 
@@ -68,3 +69,24 @@ class AdminDashboardView(APIView):
 
     def get(self, request):
         return Response({"message": "Welcome to the admin dashboard"})
+    
+
+class UserProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self,request):
+        profile = UserProfile.objects.get(user=request.user)
+        return Response({
+            'username': request.user.username,
+            'profile_picture': request.build_absolute_uri(profile.profile_picture.url) if profile.profile_picture else None,
+        })
+    
+    def put(self, request):
+        profile = UserProfile.objects.get(user=request.user)
+        if 'username' in request.data:
+            request.user.username = request.data['username']
+            request.user.save()
+        if 'profile_picture' in request.FILES:
+            profile.profile_picture = request.FILES['profile_picture']
+            profile.save()
+        return Response({'message': 'profile updated successfully'})
