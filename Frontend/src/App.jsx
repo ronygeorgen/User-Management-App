@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, Navigate, Link } from "react-router-dom"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Login from "./components/login/Login"
 import Signup from "./components/signup/Signup"
 import Home from "./components/home/Home.jsx"
@@ -11,12 +11,6 @@ function App() {
   return (
     <>
     <BrowserRouter>
-    {/* <nav>
-      
-      <Link to="/signup">Signup</Link><br />
-      <Link to="/admin/login">Admin Login</Link><br />
-      <Link to="/user-profile">User Profile</Link>
-    </nav> */}
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/login" element={<Login />} />

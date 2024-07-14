@@ -57,6 +57,7 @@ const Login = () => {
                 </form>
                 <div className='redirect'>
                     <p>Don't have an acoount ?<Link to="/signup">Signup</Link><br /> </p>
+                    <p>Switch to Admin ?<Link to="/admin/login">Admin-Login</Link><br /> </p>
                 </div>
             </div>
             
