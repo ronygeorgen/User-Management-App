@@ -39,7 +39,7 @@ const CreateUserPage = () => {
     }
     if (!userData.username.trim()) {
       tempErrors.username = "Username is required";
-    } else if (!/^[a-zA-Z]+$/.test(userData.username)) {  // Updated regex to only allow letters
+    } else if (!/^[a-zA-Z]+$/.test(userData.username)) {  
     tempErrors.username = "Username can only contain letters (no numbers or special characters)";
     }
     if (!userData.phone_number.trim()) {
@@ -76,7 +76,6 @@ const CreateUserPage = () => {
         navigate('/admin/dashboard'); 
       } catch (error) {
         console.error('Failed to create user:', error);
-        // Handle error (e.g., show error message to user)
       }
     }
   };
