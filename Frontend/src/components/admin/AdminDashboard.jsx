@@ -3,7 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearAuthData } from '../../redux/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import adminAxiosInstance from '../../adminaxiosconfig';
+import CreateUserModel from './CreateUserModel';
 import './AdminDashboard.css';
+
+
 const AdminDashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -11,10 +14,19 @@ const AdminDashboard = () => {
   const [activeUsers, setActiveUsers] = useState([]);
   const [inactiveUsers, setInactiveUsers] = useState([]);
   const [message, setMessage] = useState('');
+  const [isCreateUserModelOpen, setIsCreateUserModelOpen] = useState(false);
 
   useEffect(() => {
     fetchDashboardData();
   }, []);
+
+  const handleCreateUser = () => {
+    setIsCreateUserModelOpen(true);
+  };
+
+  const handleUserCreated = () => {
+    fetchDashboardData();
+  };
 
   const fetchDashboardData = async () => {
     try {
@@ -84,6 +96,7 @@ const AdminDashboard = () => {
         <h1 className="dashboard-title">Admin Dashboard</h1>
         <div className="user-info">
           <h5 className="welcome-message">Welcome {user ? user.first_name : 'Admin'}!</h5>
+          <button className="create-btn" onClick={handleCreateUser}>Create User</button>
           <button className="logout-btn" onClick={handleLogout}>Logout</button>
         </div>
       </header>
@@ -98,6 +111,8 @@ const AdminDashboard = () => {
           <UserTable users={inactiveUsers} tableTitle="Inactive Users" isActive={false}/>
         </div>
       </main>
+
+      <CreateUserModel isOpen={isCreateUserModelOpen} onClose={() => setIsCreateUserModelOpen(false)} onUserCreated={handleUserCreated} />
     </div>
   );
 };
