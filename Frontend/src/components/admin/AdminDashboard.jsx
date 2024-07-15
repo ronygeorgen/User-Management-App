@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearAuthData } from '../../redux/auth/authSlice';
+import { clearAuthData, setAuthData } from '../../redux/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import adminAxiosInstance from '../../adminaxiosconfig';
-import CreateUserModel from './CreateUserModel';
 import './AdminDashboard.css';
 
 
@@ -14,18 +13,21 @@ const AdminDashboard = () => {
   const [activeUsers, setActiveUsers] = useState([]);
   const [inactiveUsers, setInactiveUsers] = useState([]);
   const [message, setMessage] = useState('');
-  const [isCreateUserModelOpen, setIsCreateUserModelOpen] = useState(false);
 
   useEffect(() => {
+    if (!user) {
+      const storedAdminData = localStorage.getItem('adminData');
+      if (storedAdminData) {
+        dispatch(setAuthData(JSON.parse(storedAdminData)));
+      } else {
+        navigate('/admin/login');
+      }
+    }
     fetchDashboardData();
-  }, []);
+  }, [dispatch, navigate, user]);
 
   const handleCreateUser = () => {
-    setIsCreateUserModelOpen(true);
-  };
-
-  const handleUserCreated = () => {
-    fetchDashboardData();
+    navigate('/admin/create-user');
   };
 
   const fetchDashboardData = async () => {
@@ -45,13 +47,14 @@ const AdminDashboard = () => {
   const handleLogout = () => {
     dispatch(clearAuthData());
     localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminData');
     navigate('/admin/login');
   };
 
   const toggleUserStatus = async (userId, currentStatus) => {
     try {
       await adminAxiosInstance.post(`/admin/users/${userId}/toggle-status/`);
-      fetchDashboardData(); // Refetch all data to update both lists
+      fetchDashboardData();
     } catch (error) {
       console.error('Failed to toggle user status:', error);
     }
@@ -94,7 +97,7 @@ const AdminDashboard = () => {
     <div className="admin-dashboard">
       <header className="dashboard-header">
         <h1 className="dashboard-title">Admin Dashboard</h1>
-        <div className="user-info">
+        <div className="user-info" >
           <h5 className="welcome-message">Welcome {user ? user.first_name : 'Admin'}!</h5>
           <button className="create-btn" onClick={handleCreateUser}>Create User</button>
           <button className="logout-btn" onClick={handleLogout}>Logout</button>
@@ -112,7 +115,6 @@ const AdminDashboard = () => {
         </div>
       </main>
 
-      <CreateUserModel isOpen={isCreateUserModelOpen} onClose={() => setIsCreateUserModelOpen(false)} onUserCreated={handleUserCreated} />
     </div>
   );
 };

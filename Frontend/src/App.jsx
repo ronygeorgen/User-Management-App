@@ -5,7 +5,7 @@ import Home from "./components/home/Home.jsx"
 import AdminLogin from "./components/admin/AdminLogin"
 import AdminDashboard from "./components/admin/AdminDashboard"
 import UserProfile from "./components/home/UserProfile"
-import CreateUserModel from "./components/admin/CreateUserModel.jsx"
+import CreateUserPage from "./components/admin/CreateUserPage.jsx"
 
 function App() {
 
@@ -19,7 +19,7 @@ function App() {
       <Route path="/home" element={<Home />} />
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
-      <Route path="/admin/create-user" element={<CreateUserModel />} />
+      <Route path="/admin/create-user" element={<CreateUserPage />} />
       <Route path="/user-profile" element={<UserProfile />} />
   </Routes>
     </BrowserRouter>

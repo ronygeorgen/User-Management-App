@@ -1,7 +1,7 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
-import { clearAuthData } from '../../redux/auth/authSlice';
+import { setAuthData,clearAuthData } from '../../redux/auth/authSlice';
 import './Home.css';
 
 function Home() {
@@ -9,7 +9,21 @@ function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+
+  useEffect(() => {
+    if (!user) {
+      const storedUserData = localStorage.getItem('user');
+      if (storedUserData) {
+        const parsedUserData = JSON.parse(storedUserData);
+        dispatch(setAuthData({ user: parsedUserData }));
+      } else {
+        navigate('/login');
+      }
+    }
+  }, [dispatch, navigate, user]);
+
   const handleLogout = () => {
+    localStorage.removeItem('user');
     localStorage.removeItem('token');
     dispatch(clearAuthData());
     navigate('/login');

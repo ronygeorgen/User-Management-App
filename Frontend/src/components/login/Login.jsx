@@ -8,7 +8,6 @@ import './Login.css'
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [rememberMe, setRememberMe] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -17,6 +16,7 @@ const Login = () => {
         try {
             const response = await axiosInstance.post('/login/', { email, password });
             const { user, token } = response.data;
+            localStorage.setItem('user', JSON.stringify(user));
             localStorage.setItem('token', token);
             dispatch(setAuthData(response.data));
             navigate('/home')

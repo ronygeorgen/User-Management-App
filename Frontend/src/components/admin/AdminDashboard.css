@@ -27,6 +27,7 @@
   }
   
   .logout-btn {
+    margin-left: 10px;
     background-color: #f44336;
     color: white;
     border: none;
@@ -35,6 +36,7 @@
     cursor: pointer;
   }
   .create-btn {
+    margin-right: 10px;
     background-color: #12c11b;
     color: white;
     border: none;
