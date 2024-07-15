@@ -47,9 +47,9 @@ const Signup = () => {
       tempErrors.email = "Email is invalid";
     }
 
-    if (!userData.username.trim()) {
+    if (!formData.username.trim()) {
       tempErrors.username = "Username is required";
-    } else if (!/^[a-zA-Z]+$/.test(userData.username)) {  // Updated regex to only allow letters
+    } else if (!/^[a-zA-Z]+$/.test(formData.username)) {  
     tempErrors.username = "Username can only contain letters (no numbers or special characters)";
     }
 
