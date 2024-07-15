@@ -34,6 +34,14 @@
     border-radius: 4px;
     cursor: pointer;
   }
+  .create-btn {
+    background-color: #12c11b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
   
   .dashboard-message {
     background-color: #e3f2fd;

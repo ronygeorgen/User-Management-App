@@ -134,3 +134,12 @@ class UserProfileView(APIView):
             profile.save()
         return Response({'message': 'profile updated successfully'})
     
+@api_view(['POST'])
+@permission_classes([IsAdminUser])
+def admin_create_user(request):
+    serializer = UserSerializer(data=request.data)
+    if serializer.is_valid():
+        user = serializer.save()
+        UserProfile.objects.create(user=user)
+        return Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
