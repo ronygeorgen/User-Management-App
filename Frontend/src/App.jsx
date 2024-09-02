@@ -6,6 +6,7 @@ import AdminLogin from "./components/admin/AdminLogin"
 import AdminDashboard from "./components/admin/AdminDashboard"
 import UserProfile from "./components/home/UserProfile"
 import CreateUserPage from "./components/admin/CreateUserPage.jsx"
+import AdminRedirect from "./components/defaultadmin/defaultadmin.jsx"
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
       <Route path="/admin/create-user" element={<CreateUserPage />} />
       <Route path="/user-profile" element={<UserProfile />} />
+      <Route path="/defaultadmin" element={<AdminRedirect />} />
   </Routes>
     </BrowserRouter>
     </>
